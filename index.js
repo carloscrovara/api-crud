@@ -9,10 +9,28 @@ app.use(bodyParser.urlencoded({
 }));
 
 //rutas
-app.get("/", function(req,res){
-    res.json("llegué hasta acá");
+
+
+
+app.get("/contactos", function(req, res){
+    res.json("todos los contactos");
 })
 
+app.get("/contactos/:id", function(req, res){
+    res.json("traer un contacto");
+})
+
+app.post("/contactos/alta", function(req, res){
+    res.json("crear contacto");
+})
+
+app.put("/contactos/edita/:id", function(req, res){
+    res.json("editar contacto");
+})
+
+app.delete("/contactos/eliminar/:id", function(req, res){
+    res.json("eliminar contacto")
+})
 
 //server
 app.listen(3000, function(){
