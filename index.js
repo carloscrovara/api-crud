@@ -60,7 +60,9 @@ app.post("/contactos/alta", function (req, res) {
 });
 
 app.put("/contactos/edita/:id", function (req, res) {
-  res.json("editar contacto");
+    connection.query('UPDATE gente SET nombre=?, apellido=?, sector=?, telefono=? WHERE id=?', [req.body.nombre, req.body.apellido, req.body.sector, req.body.telefono, req.params.id], function (error, results, fields) {
+        if (error) throw error;
+        res.json(results); })
 });
 
 app.delete("/contactos/eliminar/:id", function (req, res) {
