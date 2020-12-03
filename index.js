@@ -50,7 +50,13 @@ app.get("/contactos/:id", function (req, res) {
 });
 
 app.post("/contactos/alta", function (req, res) {
-  res.json("crear contacto");
+    let params = req.body;
+    console.log(params);
+
+    connection.query('INSERT INTO gente SET ?', params, function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+      });
 });
 
 app.put("/contactos/edita/:id", function (req, res) {
