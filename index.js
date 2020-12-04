@@ -15,9 +15,9 @@ let mysql = require("mysql2");
 //generar conexion con base de datos
 let connection = mysql.createConnection({
   host: "localhost", //127.0.0.1
-  user: "root",
-  password: "pepito123",
-  database: "contactos",
+  user: "php-user",
+  password: "php-pass",
+  database: "contactoslaborales",
 });
 //conectamos a la base de datos
 connection.connect(function (err) {
@@ -27,7 +27,7 @@ connection.connect(function (err) {
 
 //rutas
 app.get("/contactos", function (req, res) {
-  connection.query("SELECT * FROM gente", function (error, results, fields) {
+  connection.query("SELECT * FROM listadocontactos", function (error, results, fields) {
     if (error) throw error;
     res.json(results);
   });
@@ -35,7 +35,7 @@ app.get("/contactos", function (req, res) {
 
 app.get("/contactos/:id", function (req, res) {
   connection.query(
-    "SELECT * FROM gente WHERE id=?",
+    "SELECT * FROM listadocontactos WHERE id=?",
     [req.params.id],
     function (error, results, fields) {
       if (error) throw error;
@@ -53,14 +53,14 @@ app.post("/contactos/alta", function (req, res) {
     let params = req.body;
     console.log(params);
 
-    connection.query('INSERT INTO gente SET ?', params, function (error, results, fields) {
+    connection.query('INSERT INTO listadocontactos SET ?', params, function (error, results, fields) {
         if (error) throw error;
         res.json(results);
       });
 });
 
 app.put("/contactos/edita/:id", function (req, res) {
-    connection.query('UPDATE gente SET nombre=?, apellido=?, sector=?, telefono=? WHERE id=?', [req.body.nombre, req.body.apellido, req.body.sector, req.body.telefono, req.params.id], function (error, results, fields) {
+    connection.query('UPDATE listadocontactos SET nombre=?, apellido=?, sector=?, telefono=? WHERE id=?', [req.body.nombre, req.body.apellido, req.body.sector, req.body.telefono, req.params.id], function (error, results, fields) {
         if (error) throw error;
         res.json(results); })
 });
@@ -68,7 +68,7 @@ app.put("/contactos/edita/:id", function (req, res) {
 app.delete("/contactos/eliminar/:id", function (req, res) {
   
     connection.query(
-        "DELETE FROM gente WHERE id=?",
+        "DELETE FROM listadocontactos WHERE id=?",
         [req.params.id],
         function (error, results, fields) {
           if (error) throw error;
