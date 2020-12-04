@@ -66,7 +66,18 @@ app.put("/contactos/edita/:id", function (req, res) {
 });
 
 app.delete("/contactos/eliminar/:id", function (req, res) {
-  res.json("eliminar contacto");
+  
+    connection.query(
+        "DELETE FROM gente WHERE id=?",
+        [req.params.id],
+        function (error, results, fields) {
+          if (error) throw error;
+    
+            res.json(results);
+           }
+      );
+
+
 });
 
 //server
